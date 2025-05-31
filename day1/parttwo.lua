@@ -15,16 +15,21 @@ while currNum ~= nil do
 	currNum = io.read("*number")
 end
 
-local sum = 0
-
-for i, val in ipairs(first) do
-	local occ = 0
-	for _, secVal in ipairs(second) do
-		if secVal == val then
-			occ = occ + 1
-		end
+-- Make a hashmap
+local map = {}
+for _, val in ipairs(second) do
+	if map[val] == nil then
+		map[val] = 1
+	else
+		map[val] = map[val] + 1
 	end
-	sum = sum + occ * val
+end
+
+local sum = 0
+for _, val in ipairs(first) do
+	if map[val] ~= nil then
+		sum = sum + val * map[val]
+	end
 end
 
 print(sum)
