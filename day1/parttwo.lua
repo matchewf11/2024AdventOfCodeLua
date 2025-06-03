@@ -1,8 +1,6 @@
-io.input("input.txt")
+local left, count = {}, {}
 
-local line, left, count = io.read(), {}, {}
-
-while line do
+for line in io.lines("input.txt") do
 	local _, _, x, y = string.find(line, "(%d+)   (%d+)")
 	left[#left + 1] = x
 	if count[y] then
@@ -10,7 +8,6 @@ while line do
 	else
 		count[y] = 1
 	end
-	line = io.read()
 end
 
 local sum = 0

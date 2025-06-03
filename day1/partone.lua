@@ -1,12 +1,8 @@
-io.input("test.txt")
-
-local line = io.read()
 local left, right = {}, {}
-while line do
+for line in io.lines("test.txt") do
 	local _, _, x, y = string.find(line, "(%d+)   (%d+)")
 	left[#left + 1] = x
 	right[#right + 1] = y
-	line = io.read()
 end
 
 table.sort(left)
