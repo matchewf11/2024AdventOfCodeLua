@@ -1,31 +1,24 @@
 io.input("input.txt")
 
-local currNum = io.read("*number")
-local count = 0
-local first = {}
-local second = {}
+local line, left, count = io.read(), {}, {}
 
-while currNum ~= nil do
-	if count % 2 == 0 then
-		first[#first + 1] = currNum
+while line do
+	local _, _, x, y = string.find(line, "(%d+)   (%d+)")
+	left[#left + 1] = x
+	if count[y] then
+		count[y] = count[y] + 1
 	else
-		if second[currNum] == nil then
-			second[currNum] = 1
-		else
-			second[currNum] = second[currNum] + 1
-		end
+		count[y] = 1
 	end
-	count = count + 1
-	currNum = io.read("*number")
+	line = io.read()
 end
 
 local sum = 0
-for _, val in ipairs(first) do
-	if second[val] ~= nil then
-		sum = sum + val * second[val]
+
+for _, val in ipairs(left) do
+	if count[val] then
+		sum = sum + val * count[val]
 	end
 end
 
 print(sum)
-
-io.close()
