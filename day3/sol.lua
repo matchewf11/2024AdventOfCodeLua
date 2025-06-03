@@ -1,0 +1,35 @@
+local function splitFirst(s, c)
+	local map = {}
+	for i = 1, #s do
+		if string.sub(s, i, i) == c then
+			map[1] = string.sub(s, 1, i - 1)
+			map[2] = string.sub(s, i + 1, #s)
+			return map
+		end
+	end
+	map[1] = string.sub(s, 1, #s)
+	map[2] = ":("
+	return map
+end
+
+io.input("input.txt")
+local str = io.read()
+local sum = 0
+
+while str ~= nil do
+	for i = 1, #str do
+		if string.sub(str, i, i + 3) == "mul(" then
+			local rest = string.sub(str, i + 4, i + 12)
+			local split = splitFirst(rest, ")")
+			if split[2] ~= ":(" then
+				local nums = splitFirst(split[1], ",")
+				if tonumber(nums[1]) and tonumber(nums[2]) then
+					sum = sum + (tonumber(nums[1] * tonumber(nums[2])))
+				end
+			end
+		end
+	end
+	str = io.read()
+end
+
+print(sum)

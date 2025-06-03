@@ -1,10 +1,8 @@
 io.input("input.txt")
 
-local currNum = io.read("*number")
-local count = 0
-local first = {}
-local second = {}
+local count, first, second = 0, {}, {}
 
+local currNum = io.read("*number")
 while currNum ~= nil do
 	if count % 2 == 0 then
 		first[#first + 1] = currNum
