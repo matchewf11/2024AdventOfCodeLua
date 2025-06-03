@@ -1,8 +1,8 @@
 local left, right = {}, {}
 for line in io.lines("test.txt") do
 	local _, _, x, y = string.find(line, "(%d+)   (%d+)")
-	left[#left + 1] = x
-	right[#right + 1] = y
+	table.insert(left, x)
+	table.insert(right, y)
 end
 
 table.sort(left)

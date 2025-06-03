@@ -1,19 +1,9 @@
-io.input("input.txt")
-local str = io.read()
 local sum = 0
 
-while str ~= nil do
-	local i = 1
-	while i <= #str do
-		local start, last, val1, val2 = string.find(str, "mul%((%d+),(%d+)%)", i)
-		if start and last then
-			sum = sum + val1 * val2
-			i = last + 1
-		else
-			i = i + 1
-		end
+for line in io.lines("input.txt") do
+	for val1, val2 in string.gmatch(line, "mul%((%d+),(%d+)%)") do
+		sum = sum + val1 * val2
 	end
-	str = io.read()
 end
 
 print(sum)
