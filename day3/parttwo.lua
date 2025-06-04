@@ -1,37 +1,46 @@
+local sum = 0
+local lock = false
+for line in io.lines("input.txt") do
+	local i = 1
+	while i <= #line do
+		local sMul, eMul, n, m = string.find(line, "mul%((%d+),(%d+)%)", i)
+		local sDo, eDo = string.find(line, "do%(%)", i)
+		local sNot, eNot = string.find(line, "don't%(%)", i)
 
---xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))
--- local function splitFirst(s, c)
--- 	local map = {}
--- 	for i = 1, #s do
--- 		if string.sub(s, i, i) == c then
--- 			map[1] = string.sub(s, 1, i - 1)
--- 			map[2] = string.sub(s, i + 1, #s)
--- 			return map
--- 		end
--- 	end
--- 	map[1] = string.sub(s, 1, #s)
--- 	map[2] = ":("
--- 	return map
--- end
---
--- io.input("input.txt")
--- local str = io.read()
--- local sum = 0
---
--- while str ~= nil do
--- 	for i = 1, #str do
--- 		if string.sub(str, i, i + 3) == "mul(" then
--- 			local rest = string.sub(str, i + 4, i + 12)
--- 			local split = splitFirst(rest, ")")
--- 			if split[2] ~= ":(" then
--- 				local nums = splitFirst(split[1], ",")
--- 				if tonumber(nums[1]) and tonumber(nums[2]) then
--- 					sum = sum + (tonumber(nums[1] * tonumber(nums[2])))
--- 				end
--- 			end
--- 		end
--- 	end
--- 	str = io.read()
--- end
---
--- print(sum)
+		local temp = {}
+
+		if sMul then
+			table.insert(temp, sMul)
+		end
+		if sDo then
+			table.insert(temp, sDo)
+		end
+		if sNot then
+			table.insert(temp, sNot)
+		end
+
+		if #temp == 0 then
+			break
+		end
+
+		local min = math.huge
+		for j = 1, #temp do
+			min = math.min(min, temp[j])
+		end
+
+		if min == sMul then
+			if not lock then
+				sum = sum + n * m
+			end
+			i = eMul + 1
+		elseif min == sDo then
+			lock = false
+			i = eDo + 1
+		else
+			lock = true
+			i = eNot + 1
+		end
+	end
+end
+
+print(sum)

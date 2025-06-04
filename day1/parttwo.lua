@@ -2,7 +2,7 @@ local left, count = {}, {}
 
 for line in io.lines("input.txt") do
 	local _, _, x, y = string.find(line, "(%d+)   (%d+)")
-	left[#left + 1] = x
+	table.insert(left, x)
 	count[y] = count[y] and count[y] + 1 or 1
 end
 
